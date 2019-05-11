@@ -1,0 +1,16 @@
+{
+	"cSpell.words": [
+		"actions",
+		"browserslist",
+		"colada",
+		"devtools",
+		"express",
+		"extension",
+		"logger",
+		"pino",
+		"redux",
+		"typesafe"
+	],
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false
+}
