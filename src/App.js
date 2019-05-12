@@ -1,12 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './App.css';
+import { welcomeSaga } from './store/actions';
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			name: '',
-			greeting: ''
+			name: ''
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,12 +21,15 @@ class App extends React.Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		fetch(`/api/greeting?name=${encodeURIComponent(this.state.name)}`)
-			.then(response => response.json())
-			.then(state => this.setState(state));
+		this.props.sendWelcome(this.state.name);
+	}
+
+	componentDidMount() {
+		this.props.sendWelcome(null);
 	}
 	
 	render() {
+		const __greeting = (this.props.greeting) ? <p>{this.props.greeting}</p> : null;
 		return (
 		  <div className="App">
 			<header className="App-header">
@@ -39,11 +43,23 @@ class App extends React.Component {
 				/>
 				<button type="submit">Submit</button>
 			  </form>
-			  <p>{this.state.greeting}</p>
+			  {__greeting}
 			</header>
 		  </div>
 		);
 	  }
 }
 
-export default App;
+const _mapStoreToProps = (__store) => {
+	return {
+		greeting : __store.default.greeting
+	}
+}
+
+const _mapDispatchToProps = (__dispatch) => {
+	return {
+		sendWelcome : (__name) => __dispatch(welcomeSaga(__name))
+	}
+}
+
+export default connect(_mapStoreToProps, _mapDispatchToProps)(App);
