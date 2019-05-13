@@ -1,4 +1,8 @@
 export {
 	welcomeSaga,
-	updateGreeting
+	updateGreeting,
+	updateControls,
+	signUp,
+	signUpFail,
+	signUpSuccess
 } from './default/default';

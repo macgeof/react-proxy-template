@@ -4,5 +4,5 @@ const defaultRoutes = require('../routes/default');
 module.exports = function(app) {
   app.use(express.json());
   app.use(error);
-  app.use("/api/greeting", defaultRoutes);
+  app.use("/api/greeting/", defaultRoutes);
 };

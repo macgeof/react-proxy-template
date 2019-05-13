@@ -1,8 +1,8 @@
 import { takeLatest } from 'redux-saga/effects';
-import { WELCOME_SAGA } from '../../model/default/default';
-import { sendWelcome } from './default/default';
+import { SEND_SIGN_UP } from '../../model/default/default';
+import { signUp } from './default/default';
 
 export function* watchDefaultSagas()
 {
-	yield takeLatest(WELCOME_SAGA, sendWelcome);
+	yield takeLatest(SEND_SIGN_UP, signUp)
 }

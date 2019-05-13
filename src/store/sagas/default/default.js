@@ -1,27 +1,24 @@
 import { call, put } from 'redux-saga/effects';
-import { updateGreeting } from '../../actions';
+import { signUpSuccess, signUpFail } from '../../actions';
 
-export function* sendWelcome(__action)
+export function* signUp(__action)
 {
-	let __greeting = null;
-	const __name = yield __action.payload;
-	if (__name)
+	const __name = __action.payload.name;
+	const __email = __action.payload.email;
+	const __password = __action.payload.password;
+	try
 	{
-		try
-		{
-			__greeting = yield call(callFetch, __name);
-		}
-		catch (__err)
-		{
-			// do nothing
-		}
+		const __response = yield call(callFetch, __name, __email, __password);
+		yield put(signUpSuccess(__response));
 	}
-	yield put(updateGreeting(__greeting));
+	catch (__err)
+	{
+		yield put(signUpFail(__err));
+	}
 }
 
-export function callFetch(__name)
+export function callFetch(__name, __email, __password)
 {
-	return fetch(`/api/greeting/?name=${__name}`)
+	return fetch(`/api/greeting?name=${__name}&email=${__email}&password=${__password}`)
 	  .then(__response => __response.json())
-	  .then(__json => __json.greeting);
 }
